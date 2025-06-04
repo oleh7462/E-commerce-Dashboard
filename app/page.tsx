@@ -118,12 +118,12 @@ export default function AnalyticsDashboard() {
   }
 
   const renderDashboard = () => (
-    <>
+    <div className="space-y-8">
       {/* Status Bar */}
-      <div className="mb-8 flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center space-x-4">
           <div className="relative">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Analytics Dashboard
             </h1>
             <div className="absolute -bottom-2 left-0 h-1 w-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
@@ -144,7 +144,7 @@ export default function AnalyticsDashboard() {
       </div>
 
       {/* Enhanced KPI Cards */}
-      <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {kpiData.map((kpi, index) => (
           <Card
             key={index}
@@ -160,7 +160,7 @@ export default function AnalyticsDashboard() {
               </div>
             </CardHeader>
             <CardContent className="relative z-10">
-              <div className="text-3xl font-bold text-gray-900 mb-1">{kpi.value}</div>
+              <div className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{kpi.value}</div>
               <div className="flex items-center text-sm">
                 {kpi.trend === "up" ? (
                   <TrendingUp className="mr-1 h-4 w-4 text-emerald-500" />
@@ -179,77 +179,88 @@ export default function AnalyticsDashboard() {
 
       {/* Enhanced Main Content */}
       <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 bg-white/50 backdrop-blur-sm border shadow-sm">
-          <TabsTrigger value="overview">{t("overview")}</TabsTrigger>
-          <TabsTrigger value="realtime">{t("realtime")}</TabsTrigger>
-          <TabsTrigger value="comparison">{t("comparison")}</TabsTrigger>
-          <TabsTrigger value="products">{t("products")}</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-white/50 backdrop-blur-sm border shadow-sm">
+          <TabsTrigger value="overview" className="text-xs sm:text-sm">
+            {t("overview")}
+          </TabsTrigger>
+          <TabsTrigger value="realtime" className="text-xs sm:text-sm">
+            {t("realtime")}
+          </TabsTrigger>
+          <TabsTrigger value="comparison" className="text-xs sm:text-sm">
+            {t("comparison")}
+          </TabsTrigger>
+          <TabsTrigger value="products" className="text-xs sm:text-sm">
+            {t("products")}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-4 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
+          {/* First Row - Revenue and Traffic */}
+          <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
+            <Card className="lg:col-span-2 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
               <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-lg">
                 <CardTitle className="text-white">Revenue Overview</CardTitle>
                 <CardDescription className="text-blue-100">Monthly revenue trends and projections</CardDescription>
               </CardHeader>
-              <CardContent className="pl-2 pt-6">
+              <CardContent className="p-6">
                 <RevenueChart />
               </CardContent>
             </Card>
-            <Card className="col-span-3 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
+            <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
               <CardHeader className="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-t-lg">
                 <CardTitle className="text-white">Traffic Sources</CardTitle>
                 <CardDescription className="text-green-100">Breakdown of traffic by source</CardDescription>
               </CardHeader>
-              <CardContent className="pt-6">
+              <CardContent className="p-6">
                 <TrafficChart />
               </CardContent>
             </Card>
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-            <Card className="col-span-4 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
+
+          {/* Second Row - Conversion and Categories */}
+          <div className="grid gap-6 grid-cols-1 lg:grid-cols-3">
+            <Card className="lg:col-span-2 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
               <CardHeader className="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-t-lg">
                 <CardTitle className="text-white">Conversion Funnel</CardTitle>
                 <CardDescription className="text-purple-100">User journey and conversion rates</CardDescription>
               </CardHeader>
-              <CardContent className="pt-6">
+              <CardContent className="p-6">
                 <ConversionChart />
               </CardContent>
             </Card>
-            <Card className="col-span-3 border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
+            <Card className="border-0 shadow-lg bg-gradient-to-br from-white to-gray-50">
               <CardHeader className="bg-gradient-to-r from-orange-500 to-red-600 text-white rounded-t-lg">
-                <CardTitle className="text-white">Top Performing Categories</CardTitle>
+                <CardTitle className="text-white">Top Categories</CardTitle>
                 <CardDescription className="text-orange-100">Revenue by product category</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4 pt-6">
+              <CardContent className="space-y-4 p-6">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">Electronics</span>
                     <span className="text-sm text-muted-foreground">$847K</span>
                   </div>
-                  <Progress value={85} className="h-3 bg-gradient-to-r from-blue-200 to-blue-300" />
+                  <Progress value={85} className="h-3" />
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">Fashion</span>
                     <span className="text-sm text-muted-foreground">$623K</span>
                   </div>
-                  <Progress value={62} className="h-3 bg-gradient-to-r from-purple-200 to-purple-300" />
+                  <Progress value={62} className="h-3" />
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">Home & Garden</span>
                     <span className="text-sm text-muted-foreground">$445K</span>
                   </div>
-                  <Progress value={45} className="h-3 bg-gradient-to-r from-green-200 to-green-300" />
+                  <Progress value={45} className="h-3" />
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-medium">Sports</span>
                     <span className="text-sm text-muted-foreground">$312K</span>
                   </div>
-                  <Progress value={31} className="h-3 bg-gradient-to-r from-orange-200 to-orange-300" />
+                  <Progress value={31} className="h-3" />
                 </div>
               </CardContent>
             </Card>
@@ -268,7 +279,7 @@ export default function AnalyticsDashboard() {
           <ProductPerformance />
         </TabsContent>
       </Tabs>
-    </>
+    </div>
   )
 
   return (
@@ -277,7 +288,7 @@ export default function AnalyticsDashboard() {
     >
       {/* Enhanced Header */}
       <header className="border-b bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 shadow-sm sticky top-0 z-50">
-        <div className="container flex h-16 items-center">
+        <div className="container mx-auto px-4 flex h-16 items-center">
           <div className="mr-4 flex">
             <a className="mr-6 flex items-center space-x-2" href="/">
               <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg">
@@ -311,7 +322,7 @@ export default function AnalyticsDashboard() {
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder={t("search")}
-                  className="pl-8 md:w-[300px] lg:w-[400px] bg-white/50 backdrop-blur-sm border-gray-200 dark:bg-gray-800/50 dark:border-gray-700"
+                  className="pl-8 w-full md:w-[300px] lg:w-[400px] bg-white/50 backdrop-blur-sm border-gray-200 dark:bg-gray-800/50 dark:border-gray-700"
                 />
               </div>
             </div>
@@ -324,7 +335,7 @@ export default function AnalyticsDashboard() {
                   variant={isRealTime ? "default" : "outline"}
                   size="sm"
                   onClick={() => setIsRealTime(!isRealTime)}
-                  className={isRealTime ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0" : ""}
+                  className={`hidden sm:flex ${isRealTime ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0" : ""}`}
                 >
                   <Activity className="mr-2 h-4 w-4" />
                   {isRealTime ? t("live") : t("paused")}
@@ -397,7 +408,7 @@ export default function AnalyticsDashboard() {
         </div>
       </header>
 
-      <div className="container py-8">{renderCurrentPage()}</div>
+      <div className="container mx-auto px-4 py-8">{renderCurrentPage()}</div>
     </div>
   )
 }
